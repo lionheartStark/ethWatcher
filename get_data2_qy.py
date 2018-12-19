@@ -18,16 +18,19 @@ def create_table(db_conn):
                 from_ text NOT NULL,
                 gas int  NOT NULL,
                 gasPrice int NOT NULL,
+                
                 hash int PRIMARY KEY NOT NULL,
                 input text NOT NULL,
                 nonce int NOT NULL,
                 r text NOT NULL,
                 s text NOT NULL,
+                
                 to_ text NOT NULL,
                 transactionIndex int NOT NULL,
                 v int NOT NULL,
                 value int NOT NULL
            );''')
+
     print("Table created successfully");
     # db_conn.commit()
 
@@ -48,9 +51,9 @@ def blk_trans_to_db(input_blk):
     for transaction in input_blk['transactions']:
         sql_values=""
         for item in transaction:
-            if (isinstance(transaction[item], type(transaction["r"]))):
+            if (item in ["gasPrice"]):
                 # print("\'"+web3.toHex((transaction[item]))+"\'")
-                sql_values += "\'"+((transaction[item]))+"\',"
+                sql_values += "\'"+str(int((transaction[item]), 16))+"\',"
             else:
                 # print("\'"+str(transaction[item])+"\'")
                 sql_values += "\'"+str(transaction[item])+"\',"
@@ -155,7 +158,7 @@ if __name__ == '__main__':
 
 
 
-    get_data_force_end(force_end_num1-12, 10, 1)
+    get_data_force_end(force_end_num1-12, 1, 1)
     db_conn.commit()
     db_conn.close()
 
