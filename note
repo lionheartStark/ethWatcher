@@ -1,1 +1,21 @@
-insert into transactions values('a','a','a','a','a','a','a','a','a','a','a','a','a','a')
+这里是一些可能会用到的是数据库操作
+select gasPrice  from transactions where gasPrice > 9000000000;
+
+select hash  from transactions where gasPrice > 9000000000;
+
+select hash  from transactions where gasPrice > 9000000000;
+
+登录
+mysql -u root -p
+use eth_data
+启动服务
+service mysql start
+service mysql stop
+
+
+删除数据库
+drop database eth_data;
+
+插入
+insert into transactions (gasPrice,hash) values(15500000000,'0xe3196a1e117e1e551314fcceab9ed869755e0e984c9255a4d746bbedd8c3878c') 
+

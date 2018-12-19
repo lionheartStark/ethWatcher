@@ -1,8 +1,10 @@
 #!/home/qy/vyper-venv/bin/python
 # -*- coding: utf-8 -*-
-import sqlite3, re, time, threadpool
+import re
+import threadpool
 import requests
 import pymysql
+import time
 
 URL = 'https://mainnet.infura.io/'
 session = requests.Session()
@@ -18,7 +20,7 @@ def create_table(db_conn):
         hash varchar(100) primary key not null,
         gasPrice bigint  not null
     );
-           ''')
+    ''')
 
     print("Table created successfully")
     db_conn.commit()
@@ -29,13 +31,13 @@ def create_table(db_conn):
 def do_sql(db_conn, sql_str):
     c = db_conn.cursor()
     c.execute(sql_str)
-    # print("execute %s \n"%sql_str)
-    #
+    # db_conn.commit()
+    c.close()
     return
 
 
 # 将块中全部交易提交
-def blk_trans_to_db(input_blk):
+def blk_trans_to_db(input_blk,db_conn):
     if input_blk['transactions']==[]:
         return
     for transaction in input_blk['transactions']:
@@ -48,11 +50,11 @@ def blk_trans_to_db(input_blk):
                 sql_values += str(int((transaction[item]), 16))+","
             elif (item in ["hash"]):
                 sql_items += item + ","
-                sql_values += transaction[item]+","
+                sql_values += "'"+transaction[item]+"',"
         # 因为末尾多了一个逗号，所以需要删除
         sql_items = sql_items[0:-1]
         sql_values = sql_values[0:-1]
-        sql_str = "insert into transactions ("+sql_items+") "+ "values("+sql_values+")"
+        sql_str = "insert into transactions ("+sql_items+") " + "values("+sql_values+")"
         print(sql_str, "\n")
         do_sql(db_conn, sql_str)
     return
@@ -114,10 +116,14 @@ def RequestData(_BlockNum,_requestId):
 # 对每个子线程来说的任务
 def do_prejobs(thread_num,start_num, limit_num):
     print("%d to %d"%(start_num,start_num+limit_num))
+    db_conn = pymysql.connect("localhost", "root", "789826", db_name, charset='utf8')
     for i in range(limit_num):
         start_num_i=start_num+i
         latest_blk = RequestData(str(hex(start_num_i)), requestId)
-        blk_trans_to_db(latest_blk)
+        blk_trans_to_db(latest_blk,db_conn)
+        time.sleep(0.01)
+    db_conn.commit()
+    db_conn.close()
     return
 
 
@@ -158,6 +164,16 @@ def create_db(name):
     conn.close()
 
 
+def clean_db(db_conn):
+    c = db_conn.cursor()
+    c.execute('''
+    delete from  transactions;
+    ''')
+    print("Table clean successfully")
+    db_conn.commit()
+    c.close()
+
+
 if __name__ == '__main__':
     db_name = "eth_data"
     create_db(db_name)
@@ -165,10 +181,12 @@ if __name__ == '__main__':
     db_conn = pymysql.connect("localhost", "root", "789826", db_name, charset='utf8')
 
     create_table(db_conn)
+    clean_db(db_conn)
+
     requestId = 1
     force_end_num1 = int((rpc_func('eth_blockNumber', [], requestId)), 16)
 
-    get_data_force_end(force_end_num1-12, 3, 3)
+    get_data_force_end(force_end_num1-100, 100, 5)
     db_conn.commit()
     db_conn.close()
 

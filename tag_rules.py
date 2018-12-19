@@ -1,14 +1,12 @@
 #!/home/qy/vyper-venv/bin/python
 # -*- coding: utf-8 -*-
-from web3 import Web3
-import sqlite3,re,time,threadpool
-import requests
 """
 规则的设计标准，尽量兼容性
 """
+import pymysql
 
 #阈值型
-def limit_rules(db_conn,limit_obj,limit_value):
+def singer_limit_rules(db_conn,table,limit_obj,limit_value):
     """
 
     :param db_conn:
@@ -17,11 +15,16 @@ def limit_rules(db_conn,limit_obj,limit_value):
     :return:
     """
     sql_str = ""
-    c = db_conn.cursor()
-    c.execute(sql_str)
+    cursor = db_conn.cursor()
+    cursor.execute(
+    "select hash from {} where {} > {};".format(table, limit_obj, limit_value)
+    )
+    results = cursor.fetchall()
+    db_conn.commit()
+    cursor.close()
 
-def c():
-    """
+if __name__ == '__main__':
+    db_name = "eth_data"
+    db_conn = pymysql.connect("localhost", "root", "789826", db_name, charset='utf8')
+    singer_limit_rules(db_conn, "transactions", "gasPrice",9000000000)
 
-    :return:
-    """
