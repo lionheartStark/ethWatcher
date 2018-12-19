@@ -1,7 +1,8 @@
 #!/home/qy/vyper-venv/bin/python
 # -*- coding: utf-8 -*-
-import sqlite3,re,time,threadpool
+import sqlite3, re, time, threadpool
 import requests
+import pymysql
 
 URL = 'https://mainnet.infura.io/'
 session = requests.Session()
@@ -12,28 +13,16 @@ session = requests.Session()
 # 数据库建表操作
 def create_table(db_conn):
     c = db_conn.cursor()
-    c.execute('''CREATE TABLE TRANSACTIONS
-           (
-                blockHash text NOT NULL,
-                blockNumber INT NOT NULL,
-                from_ text NOT NULL,
-                gas int  NOT NULL,
-                gasPrice int NOT NULL,
-                
-                hash int PRIMARY KEY NOT NULL,
-                input text NOT NULL,
-                nonce int NOT NULL,
-                r text NOT NULL,
-                s text NOT NULL,
-                
-                to_ text NOT NULL,
-                transactionIndex int NOT NULL,
-                v int NOT NULL,
-                value int NOT NULL
-           );''')
+    c.execute('''
+    create table if not exists transactions (
+        hash varchar(100) primary key not null,
+        gasPrice bigint  not null
+    );
+           ''')
 
     print("Table created successfully")
-    # db_conn.commit()
+    db_conn.commit()
+    c.close()
 
 
 # 执行一个sql语句
@@ -51,35 +40,38 @@ def blk_trans_to_db(input_blk):
         return
     for transaction in input_blk['transactions']:
         sql_values=""
+        sql_items=""
         for item in transaction:
             if (item in ["gasPrice"]):
                 # print("\'"+web3.toHex((transaction[item]))+"\'")
-                sql_values += "\'"+str(int((transaction[item]), 16))+"\',"
-            else:
-                # print("\'"+str(transaction[item])+"\'")
-                sql_values += "\'"+str(transaction[item])+"\',"
+                sql_items += item + ","
+                sql_values += str(int((transaction[item]), 16))+","
+            elif (item in ["hash"]):
+                sql_items += item + ","
+                sql_values += transaction[item]+","
         # 因为末尾多了一个逗号，所以需要删除
+        sql_items = sql_items[0:-1]
         sql_values = sql_values[0:-1]
-        sql_str = "insert into TRANSACTIONS values("+sql_values+")"
-        # print(sql_str, "\n")
+        sql_str = "insert into transactions ("+sql_items+") "+ "values("+sql_values+")"
+        print(sql_str, "\n")
         do_sql(db_conn, sql_str)
     return
 
 
 # 判断是否已经建表
-def table_not_exists(db_conn,table_name):
-    sql = '''SELECT name FROM sqlite_master
-    WHERE type='table'
-    ORDER BY name;'''
-    c = db_conn.cursor()
-    c.execute(sql)
-    tables = [c.fetchall()]
-    table_list = re.findall('(\'.*?\')',str(tables))
-    table_list = [re.sub("'",'',each) for each in table_list]
+def table_not_exists(con, table_name):
+    sql = "show tables;"
+    cursor = con.cursor()
+    cursor.execute(sql)
+    tables = [cursor.fetchall()]
+    table_list = re.findall('(\'.*?\')', str(tables))
+    table_list = [re.sub("'", '', each) for each in table_list]
+    cursor.close()
     if table_name in table_list:
         return 0
     else:
         return 1
+
 
 
 '''========================== RPC FUNCTION ========================== '''
@@ -156,15 +148,27 @@ def get_data_force_end(start_num, limit_num, thread_num):
     return
 
 
+def create_db(name):
+    conn = pymysql.connect(host='127.0.0.1', user='root', passwd='789826', charset='utf8')
+    cursor = conn.cursor()
+    cursor.execute("create database if not exists %s" % name)
+    conn.select_db(name)
+    cursor.close()
+    conn.commit()
+    conn.close()
+
+
 if __name__ == '__main__':
-    db_conn = sqlite3.connect('./eth_trans.db', check_same_thread=False)
+    db_name = "eth_data"
+    create_db(db_name)
+    print("create_db ok!")
+    db_conn = pymysql.connect("localhost", "root", "789826", db_name, charset='utf8')
 
-    if table_not_exists(db_conn, "TRANSACTIONS"):
-        create_table(db_conn)
+    create_table(db_conn)
     requestId = 1
-    force_end_num1= int((rpc_func('eth_blockNumber', [], requestId)), 16)
+    force_end_num1 = int((rpc_func('eth_blockNumber', [], requestId)), 16)
 
-    get_data_force_end(force_end_num1-12, 1, 1)
+    get_data_force_end(force_end_num1-12, 3, 3)
     db_conn.commit()
     db_conn.close()
 
