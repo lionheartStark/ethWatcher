@@ -1,6 +1,5 @@
 #!/home/qy/vyper-venv/bin/python
 # -*- coding: utf-8 -*-
-from web3 import Web3
 import sqlite3,re,time,threadpool
 import requests
 
@@ -8,6 +7,8 @@ URL = 'https://mainnet.infura.io/'
 session = requests.Session()
 
 ''''========================== DB  FUNCTION ========================== '''
+
+
 # 数据库建表操作
 def create_table(db_conn):
     c = db_conn.cursor()
@@ -31,7 +32,7 @@ def create_table(db_conn):
                 value int NOT NULL
            );''')
 
-    print("Table created successfully");
+    print("Table created successfully")
     # db_conn.commit()
 
 
@@ -64,6 +65,7 @@ def blk_trans_to_db(input_blk):
         do_sql(db_conn, sql_str)
     return
 
+
 # 判断是否已经建表
 def table_not_exists(db_conn,table_name):
     sql = '''SELECT name FROM sqlite_master
@@ -82,6 +84,7 @@ def table_not_exists(db_conn,table_name):
 
 '''========================== RPC FUNCTION ========================== '''
 
+
 def createJSONRPCRequestObject(_method, _params, _requestId):
     return {"jsonrpc": "2.0",
             "method": _method,
@@ -96,6 +99,7 @@ def postJSONRPCRequestObject(_HTTPEnpoint, _jsonRPCRequestObject):
 
     return response.json()
 
+
 def rpc_func(_apiMethod, _apiParameter, _rpcRequestId):
     requestObject = createJSONRPCRequestObject(_apiMethod, _apiParameter, _rpcRequestId)
     responseObject = postJSONRPCRequestObject(URL, requestObject)
@@ -105,12 +109,15 @@ def rpc_func(_apiMethod, _apiParameter, _rpcRequestId):
 
 
 '''========================== DO JOB FUNCTION ========================== '''
+
+
 # 请求块数据
 def RequestData(_BlockNum,_requestId):
     Block = rpc_func('eth_getBlockByNumber', [_BlockNum, True], _requestId)
     if Block == None:
         Block = RequestData(_BlockNum,_requestId)
     return Block
+
 
 # 对每个子线程来说的任务
 def do_prejobs(thread_num,start_num, limit_num):
@@ -120,6 +127,7 @@ def do_prejobs(thread_num,start_num, limit_num):
         latest_blk = RequestData(str(hex(start_num_i)), requestId)
         blk_trans_to_db(latest_blk)
     return
+
 
 # 从start_num开始收集limit_num个区块的数据
 def get_data_force_end(start_num, limit_num, thread_num):
@@ -156,8 +164,6 @@ if __name__ == '__main__':
     requestId = 1
     force_end_num1= int((rpc_func('eth_blockNumber', [], requestId)), 16)
 
-
-
     get_data_force_end(force_end_num1-12, 1, 1)
     db_conn.commit()
     db_conn.close()
@@ -167,15 +173,5 @@ if __name__ == '__main__':
 
 
 
-
-
-# 收集数据的方法
-"""
-抓取信息的方式：
-大约十五秒产生一个区块
-为了不遗漏应该严格按照区块号进行查询
-如果是近期的数据，每15秒查一次
-远期数据连续查找
-"""
 
 
