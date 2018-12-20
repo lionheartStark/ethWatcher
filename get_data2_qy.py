@@ -18,7 +18,8 @@ def create_table(db_conn):
     c.execute('''
     create table if not exists transactions (
         hash varchar(100) primary key not null,
-        gasPrice bigint  not null
+        gasPrice bigint  not null,
+        tag int default 0 not null
     );
     ''')
 
@@ -38,17 +39,17 @@ def do_sql(db_conn, sql_str):
 
 # 将块中全部交易提交
 def blk_trans_to_db(input_blk,db_conn):
-    if input_blk['transactions']==[]:
+    if input_blk['transactions'] is []:
         return
     for transaction in input_blk['transactions']:
         sql_values=""
         sql_items=""
         for item in transaction:
-            if (item in ["gasPrice"]):
+            if item in ["gasPrice"]:
                 # print("\'"+web3.toHex((transaction[item]))+"\'")
                 sql_items += item + ","
                 sql_values += str(int((transaction[item]), 16))+","
-            elif (item in ["hash"]):
+            elif item in ["hash"]:
                 sql_items += item + ","
                 sql_values += "'"+transaction[item]+"',"
         # 因为末尾多了一个逗号，所以需要删除
@@ -107,10 +108,10 @@ def rpc_func(_apiMethod, _apiParameter, _rpcRequestId):
 
 # 请求块数据
 def RequestData(_BlockNum,_requestId):
-    Block = rpc_func('eth_getBlockByNumber', [_BlockNum, True], _requestId)
-    if Block == None:
-        Block = RequestData(_BlockNum,_requestId)
-    return Block
+    block = rpc_func('eth_getBlockByNumber', [_BlockNum, True], _requestId)
+    if block is None:
+        block = RequestData(_BlockNum,_requestId)
+    return block
 
 
 # 对每个子线程来说的任务
@@ -118,9 +119,9 @@ def do_prejobs(thread_num,start_num, limit_num):
     print("%d to %d"%(start_num,start_num+limit_num))
     db_conn = pymysql.connect("localhost", "root", "789826", db_name, charset='utf8')
     for i in range(limit_num):
-        start_num_i=start_num+i
+        start_num_i = start_num+i
         latest_blk = RequestData(str(hex(start_num_i)), requestId)
-        blk_trans_to_db(latest_blk,db_conn)
+        blk_trans_to_db(latest_blk, db_conn)
         time.sleep(0.01)
     db_conn.commit()
     db_conn.close()
@@ -134,15 +135,16 @@ def get_data_force_end(start_num, limit_num, thread_num):
     # 划分线程提高效率
     force_end_num = int((rpc_func('eth_blockNumber', [], requestId)), 16)
     all_jobs = force_end_num-start_num+1
-    if (all_jobs <= 0):
+
+    if all_jobs <= 0:
         print("we can not get future data")
     else:
-        if (all_jobs > limit_num & limit_num != 0):
+        if all_jobs > limit_num & limit_num != 0:
             print("too much jobs,change all_jobs to limit")
             all_jobs = limit_num
         prejobs = int((all_jobs-all_jobs % thread_num)/thread_num)
         lastjobs = prejobs+all_jobs % thread_num
-        list_of_args=[]
+        list_of_args = []
         for i in range(thread_num-1):
             list_of_args.append(([i, start_num+i*prejobs, prejobs], None))
         list_of_args.append(([thread_num-1, start_num + (thread_num-1) * prejobs, lastjobs], None))
@@ -164,7 +166,7 @@ def create_db(name):
     conn.close()
 
 
-def clean_db(db_conn):
+def clean_table(db_conn):
     c = db_conn.cursor()
     c.execute('''
     delete from  transactions;
@@ -178,19 +180,18 @@ if __name__ == '__main__':
     db_name = "eth_data"
     create_db(db_name)
     print("create_db ok!")
-    db_conn = pymysql.connect("localhost", "root", "789826", db_name, charset='utf8')
+    my_db_conn = pymysql.connect("localhost", "root", "789826", db_name, charset='utf8')
 
-    create_table(db_conn)
-    clean_db(db_conn)
+    create_table(my_db_conn)
+    clean_table(my_db_conn)
 
     requestId = 1
     force_end_num1 = int((rpc_func('eth_blockNumber', [], requestId)), 16)
 
-    get_data_force_end(force_end_num1-100, 100, 5)
-    db_conn.commit()
-    db_conn.close()
+    get_data_force_end(force_end_num1-10, 3, 3)
+    my_db_conn.commit()
+    my_db_conn.close()
 
-    # https: // github.com / ethereum / go - ethereum / wiki / Management - APIs
 
 
 

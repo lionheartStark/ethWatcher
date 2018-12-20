@@ -1,0 +1,456 @@
+
+<!doctype html>
+<html lang="en">
+<head><title>
+	Etherscan Token Tracker
+</title>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="Description" content="List of Ethereum Tokens and their Market Capitalization of the Ethereum Blockchain on Etherscan" /><meta name="author" content="etherscan.io" /><meta name="keywords" content="ethereum, explorer, ether, search, blockchain, crypto, currency" /><meta name="format-detection" content="telephone=no" />
+<script src="/cdn-cgi/apps/head/M2jbC5w-2kzKWSY9kfVDccG4Ox8.js"></script><script type="text/javascript" src="/assets/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/jss/jquery-ui.min.js"></script>
+<style type="text/css">#div-advert {margin-top: 22px;margin-bottom: -9px;min-height: 40px;}@media (max-width: 667px) {#div-advert {min-height: 62px;}}@media (max-width: 767px) {#div-advert {padding-bottom: 20px;}}</style>
+<link rel="shortcut icon" href="/images/favicon2.ico" /><link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin" /><link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css" /><link rel="stylesheet" href="/assets/css/style-mod.css" /><link rel="stylesheet" href="/assets/custom-head-foot-scroll-blue.min.css?v=0.072" /><link rel="stylesheet" href="/assets/plugins/line-icons/line-icons.css" /><link rel="stylesheet" href="/assets/plugins/font-awesome/css/font-awesome.min.css" /></head>
+<body>
+<div class="wrapper">
+<div class="header">
+<div class="container">
+<a class="logo" href="/" target="_parent" title="Home Page">
+<img id="logo-header" src="/images/EtherscanLogo-transparent-b-small.png" alt="Logo" style="margin-top: 16px; margin-bottom: 14px; margin-left: -6px">
+</a>
+<div class="topbar hidden-xs hidden-sm ">
+<form action="/search" method="GET" autocomplete="off" spellcheck="false">
+<ul class="loginbar pull-right">
+<li><a href="/login" title="Click To Login"> LOGIN</a> <i class="fa  fa-male"></i> &nbsp;&nbsp;</li>
+<li>
+<div style="display: inline;">
+<input id="txtSearchInput" type="text" class="form-control-custom" placeholder="Search by Address / Txhash / Block / Token / Ens" name="q" maxlength="66" style="width: 330px; height: 31px;">
+<span class="" style="display: inline">
+<button class="btn-u" type="submit" style="padding: 3px 6px 3px 6px; height: 32px; width: 41px; margin-left: -5px; margin-top: 3px;">GO</button>
+</span>
+</div>
+</li>
+<li>
+<span style="float: right; margin-left: -28px; margin-top: 9px">
+<ul class="loginbar">
+<li>
+<i class="fa fa-globe"></i>
+<a>Language </a>
+<ul class="languages hoverSelectorBlock">
+<li class='active'><a href='#'>english <i class='fa fa-check'></i></a></li> <li> <a href='/?lang=zh-cn' title='simplified chinese'> <b>中文</b> </a></li>
+</ul>
+</li>
+</ul>
+</span>
+</li>
+</ul>
+</form>
+
+</div>
+
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+<span class="sr-only">Toggle Navigation</span>
+<span class="fa fa-bars"></span>
+</button>
+
+</div>
+
+<div class="collapse navbar-collapse mega-menu navbar-responsive-collapse">
+<div class="container">
+<ul class="nav navbar-nav">
+
+<li id="LI_default">
+<a href="/">Home </a>
+</li>
+<li id="LI_blockchain" class="dropdown">
+<a href="#" class="" data-toggle="dropdown">
+&nbsp;Blockchain
+</a>
+<ul class="dropdown-menu">
+<li id="LI12"><a href="/txs"><i class="fa fa-list-alt"></i>&nbsp;View Txns</a></li>
+<li id="LI16"><a href="/txsPending"><i class="fa fa-tasks "></i>&nbsp;View Pending Txns</a></li>
+<li id="LI14"><a href="/txsInternal"><i class="fa fa-puzzle-piece"></i>&nbsp;View Contract Internal Txns</a></li>
+<li class="divider"></li>
+<li id="LI_blocks2" class="dropdown-submenu"><a href="/blocks"><i class="fa fa-cubes"></i>&nbsp;View Blocks</a>
+<ul class="dropdown-menu">
+<li><a href="/blocks_forked" title="Invalid Block From Blockchain Reorganizations">FORKED Blocks (Reorgs)</a></li>
+</ul>
+</li>
+<li id="LI8"><a href="/uncles"><i class="fa fa-cube"></i>&nbsp;View Uncles</a></li>
+<li class="divider"></li>
+<li id="LI_accountall"><a href="/accounts" title="Normal & Contract Accounts"><i class="fa fa-building"></i>&nbsp;Top Accounts</a></li>
+<li id="LI_contract_verified"><a href="/contractsVerified" title="Contracts With Verified Source Code"><i class="fa fa-check-circle-o"></i>&nbsp;Verified Contracts</a></li>
+</ul>
+</li>
+<li id="LI_tokens" class="dropdown active">
+<a href="#" class="" data-toggle="dropdown">&nbsp;Tokens
+</a>
+<ul class="dropdown-menu">
+<li id="LI21"><a href="/tokens" title="List of ERC-20 Tokens"><i class="fa fa-certificate"></i>&nbsp;ERC-20 Top Tokens</a></li>
+<li id="LI1"><a href="/tokentxns"><i class="fa fa-bars"></i>&nbsp;View ERC-20 Transfers</a></li>
+<li class="divider"></li>
+ <li id="LI42"><a href="/tokens-nft" title="List of ERC-721 (Non-Fungible) Tokens"><i class="fa fa-ticket"></i>&nbsp;ERC-721 Top Tokens</a></li>
+<li id="LI40"><a href="/tokentxns-nft"><i class="fa fa-bars"></i>&nbsp;View ERC-721 Transfers</a></li>
+</ul>
+</li>
+<li id="LI_resources" class="dropdown">
+<a href="#" class="" data-toggle="dropdown">&nbsp;RESOURCES</a>
+<ul class="dropdown-menu">
+<li id="LI43"><a href="/directory" title="Ethereum Directory"><i class="fa fa-book"></i>&nbsp;Ethereum Directory</a></li>
+<li id="LI_charts2"><a href="/charts" title="Charts And Statistics"><i class="fa fa-bar-chart-o"></i>&nbsp;Charts And Stats</a></li>
+<li id="LI_chartbi"><a href="/chartinteractive" title="Interactive Charts And Statistics"><i class="fa fa-line-chart"></i>&nbsp;Interactive Chart and Stats</a></li>
+</ul>
+</li>
+<li id="LI_services2" class="dropdown mega-menu-fullwidth">
+<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">&nbsp;MORE
+</a>
+<ul class="dropdown-menu">
+<li>
+<div class="mega-menu-content disable-icons">
+<div class="container">
+<div class="row equal-height">
+<div class="col-md-3 equal-height-in">
+<ul class="list-unstyled equal-height-list">
+<li>
+<h3>DEVELOPERS</h3>
+</li>
+<li id="LI6"><a href="/apis"><i class="fa fa-cogs"></i>APIs</a></li>
+<li id="LI17"><a href="/verifyContract2" title="Verify And Publish Your Contract Source Code"><i class="fa fa-code"></i>Verify Contract</a></li>
+<li id="LI24"><a href="/opcode-tool" title="Byte To Opcode Converter"><i class="fa  fa-ellipsis-h"></i>Byte To Opcode</a></li>
+<li id="LI10"><a href="/pushTx"><i class="fa fa-pied-piper-alt"></i>Broadcast TXN</a></li>
+</ul>
+</div>
+<div class="col-md-3 equal-height-in">
+<ul class="list-unstyled equal-height-list">
+<li>
+<h3>SWARM &amp; ENS</h3>
+</li>
+<li id="LI25"><a href="/swarm" title="SWARM Search"><i class="fa fa-search-plus"></i>SWARM Search</a></li>
+<li id="LI30"><a href="/swarmupload" title="SWARM Upload"><i class="fa fa-cloud-upload"></i>SWARM Upload</a></li>
+<li id="LI22"><a href="/ens" title="Ethereum Name Service Events"><i class="fa fa-bars"></i>ENS Events</a></li>
+<li id="LI26"><a href="/enslookup" title="Ethereum Name Service Lookup"><i class="fa fa-search-plus"></i>ENS Lookup</a></li>
+</ul>
+</div>
+<div class="col-md-3 equal-height-in">
+<ul class="list-unstyled equal-height-list">
+<li>
+<h3>SERVICE TRACKER</h3>
+</li>
+<li id="LI4"><a href="/dextracker" title="Ethereum Dex Tracker"><i class="fa fa-exchange"></i>DEX Tracker</a></li>
+<li id="LI7"><a href="/orderbooks" title="Ethereum Dex Order Books"><i class="fa fa-exchange"></i>DEX Order Books</a></li>
+<li id="LI19"><a href="/gastracker" title="Ethereum Gas Tracker"><i class="fa fa-tachometer"></i>Gas Tracker</a></li>
+<li id="LI46"><a href="/nodetracker" title="Ethereum Node Tracker"><i class="fa fa-globe"></i>Node Tracker</a></li>
+</ul>
+</div>
+<div class="col-md-3 equal-height-in">
+<ul class="list-unstyled equal-height-list">
+<li>
+<h3>MISC </h3>
+</li>
+<li id="LI5"><a href="/ether-mining-calculator"><i class="fa fa-gavel"></i>Mining Calculator</a></li>
+<li id="LI29"><a href="/verifiedSignatures" title="Verified Message Signatures List"><i class="fa fa-code"></i>Verified Signature</a></li>
+<li id="LI2"><a href="/find-similiar-contracts" title="Find Other Contracts that have the Same/Similar Contract Codes"><i class="fa fa-search-plus"></i>Similiar Contracts</a></li>
+<li id="LI41"><a href="/labelcloud" title="Label Tags Word Cloud"><i class="fa fa-cloud"></i>Label Word Cloud</a></li>
+</ul>
+</div>
+<div class="col-md-3 equal-height-in">
+<ul class="list-unstyled equal-height-list">
+<li>
+<h3>OTHER EXPLORER S</h3>
+</li>
+<li id="LI28"><a href="https://ropsten.etherscan.io" target="_blank" title="Ropsten (Revived) TESTNET BLOCKEXPLORER"><i class="fa fa-external-link"></i>TESTNET (Ropsten)</a></li>
+ <li id="LI31"><a href="https://kovan.etherscan.io" target="_blank" title="Kovan (Poa) TESTNET BLOCKEXPLORER"><i class="fa fa-external-link"></i>TESTNET (Kovan)</a></li>
+<li id="LI32"><a href="https://rinkeby.etherscan.io" target="_blank" title="Rinkeby (Poa) TESTNET BLOCKEXPLORER"><i class="fa fa-external-link"></i>TESTNET (Rinkeby)</a></li>
+<li id="LI33"><a href="https://tobalaba.etherscan.com" target="_blank" title="Tobalaba (EWF) BLOCKEXPLORER"><i class="fa fa fa-external-link"></i>Tobalaba (EWF)</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</li>
+<li id="LI_login" class="hidden-lg hidden-md ">
+<a href="/login" title="Login Now">&nbsp;LOGIN</a>
+</li>
+<li class="dropdown hidden-lg hidden-md">
+<a href="#" class="" data-toggle="dropdown">
+&nbsp;Language
+</a>
+<ul class="dropdown-menu">
+<li><a href="/?lang=en">&nbsp;English</a></li>
+<li><a href="/?lang=zh-CN">&nbsp;中文</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="container left hidden-lg hidden-md" id="divmobilesearch" style="margin-top: 5px; margin-bottom: -18px; padding-right: 20px; padding-left: 20px;">
+<form action="/search" method="GET">
+<input id="txtSearchInputMobile" type="text" placeholder="Search For Account, TxHash Or Data" class="form-control" style="text-align: center;" name="q" maxlength="66" title="Address, Contract, Txn Hash or Data" />
+</form>
+<br /><br />
+</div>
+
+
+
+<div class="breadcrumbs">
+<div class="container">
+<h1 class="etitle pull-left">
+Token Tracker</h1>
+<ul class="pull-right breadcrumb">
+<li><a href="/">Home</a></li>
+<li class="active">Tokens</li>
+</ul>
+</div>
+</div>
+
+
+
+<div class="container">
+<span id="ContentPlaceHolder1_lblAdResult"><div id="div-advert">
+<ins data-revive-zoneid="2" data-revive-id="5bf14fd8280fceae0b5990be9d0e7ca4"></ins>
+<script async src="//gen.etherscan.io/www/d/asyncjses.php"></script></div></span>
+<div class="row" style="margin-top:10px">
+<div class="col-md-6" style="margin-top: 5px; margin-bottom:5px">
+<b>Ethereum Token Market Capitalization</b><br><font color='gray'>A total of 158291 Token Contracts found</font>
+</div>
+<div id="ContentPlaceHolder1_searchBarDiv" class="col-md-6">
+<form action="/tokens" method="get" autocomplete="off" spellcheck="false">
+<div style="display: inline;" class="pull-right">
+<input id="searchtoken" value="" class="form-control-custom margin-bottom-15" type="text" name="q" placeholder="Search For Token Name Or Address" runat="server" maxlength="80" style="width: 280px; height: 33px;">
+<span class="hidden-xs" style="display: inline">
+<button class="btn-u btn-u-default" type="submit" style="padding: 1px 2px 1px 2px; height: 33px; width: 40px; margin-left: -5px; margin-top: 0px;" title="Search">Find</button>
+</span>
+</div>
+</form>
+</div>
+</div>
+<div id="ContentPlaceHolder1_divpagingpanel" class="row">
+<div class="col-sm-6">
+<span class="hidden-xs"></span>
+</div>
+<div class="col-sm-6">
+<p align="right">
+<span style="white-space: nowrap; display: inline-block"><a Class="btn btn-primary btn-xs " disabled="disabled " href="#">First</a> <a Class="btn btn-primary btn-xs" disabled="disabled " href="#">Prev</a> <span style="padding: 2px 4px 4px 3px; border: 1px solid #D4D4D4; line-height: 30px; background-color: #EAEAEA; margin-top: 2px; height: 2px;">Page <b>1</b> of <b>17</b></span> <a Class="btn btn-default btn-xs logout" href="tokens?p=2">Next</a> <a Class="btn btn-default btn-xs logout" href="tokens?p=17">Last</a> </span>
+</p>
+</div>
+</div>
+
+<div id="ContentPlaceHolder1_divresult" class="table-responsive" style="margin-top:5px">
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th width="25px"></th>
+<th class='hidden-xs' width="30px"></th>
+<th style="padding-top: 0px">Token</th>
+<th class="text-nowrap" width="100px"><a href='/tokens?sort=price_usd&order=desc' title='Click For Descending Sort'>Price</a></th>
+<th class="text-nowrap" width="50px"><a href='/tokens?sort=percent_change_24h&order=desc' title='Click For Descending Sort'>%Change</a></th>
+<th class="text-nowrap" width="50px"><a href='/tokens?sort=24h_volume_usd&order=desc' title='Click For Descending Sort'>Volume (24H)</a></th>
+<th class="text-nowrap" width="50px"><b><i class='fa fa-angle-down'></i></b>&nbsp;<a href='/tokens?sort=marketcap&order=asc' title='Sorted in Descending Order,&#013;Click For Ascending Sort' style='text-decoration:underline;'>Market Cap</a></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><b><span style='position:relative; top:8px'>&nbsp;1</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xB8c77482e45F1F44dE1745F52C74426C631bDD52'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/binance_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xB8c77482e45F1F44dE1745F52C74426C631bDD52'>BNB (BNB)</a></h5><small class='hex hidden-xs'><font color='gray'>Binance aims to build a world-class crypto exchange, powering the future
+of crypto finance.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/binance_28.png'> <a style='position:relative; top:8px' href='/token/0xB8c77482e45F1F44dE1745F52C74426C631bDD52'>BNB (BNB)</a></td><td>&nbsp;<span style='margin-left:-4px'>$5.8115</span><br><font size=1>0.00142256&nbsp;Btc<br>0.053000&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 0.97%</font></td><td>$22,581,973</td><td>$760,136,801&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;2</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/mkr-etherscan-35.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2'>Maker (MKR)</a></h5><small class='hex hidden-xs'><font color='gray'>Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/mkr-etherscan-35.png'> <a style='position:relative; top:8px' href='/token/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2'>Maker (MKR)</a></td><td>&nbsp;<span style='margin-left:-4px'>$435.6284</span><br><font size=1>0.10663499&nbsp;Btc<br>3.972899&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -3.30%</font></td><td>$1,291,994</td><td>$317,236,688&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;3</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xd850942ef8811f2a866692a623011bde52a462c1'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/vechain_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xd850942ef8811f2a866692a623011bde52a462c1'>VeChain (VEN)</a></h5><small class='hex hidden-xs'><font color='gray'>VeChain aims to connect blockchain technology to the real world by providing a comprehensive governance structure, a robust economic model as well as advanced IoT integration.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/vechain_28.png'> <a style='position:relative; top:8px' href='/token/0xd850942ef8811f2a866692a623011bde52a462c1'>VeChain (VEN)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0045</span><br><font size=1>0.00000109&nbsp;Btc<br>0.000041&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 0.70%</font></td><td>$9,951,146</td><td>$246,889,235&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;4</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/centre-usdc_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'>USD Coin (USDC)</a></h5><small class='hex hidden-xs'><font color='gray'>USDC is a fully collateralized US Dollar stablecoin developed by CENTRE, the open source project and membership consortium, with Circle being the first of several forthcoming issuers.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/centre-usdc_28.png'> <a style='position:relative; top:8px' href='/token/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'>USD Coin (USDC)</a></td><td>&nbsp;<span style='margin-left:-4px'>$1.0170</span><br><font size=1>0.00024896&nbsp;Btc<br>0.009275&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 0.43%</font></td><td>$54,710,308</td><td>$226,616,120&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;5</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xd26114cd6EE289AccF82350c8d8487fedB8A0C07'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/omise.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xd26114cd6EE289AccF82350c8d8487fedB8A0C07'>OmiseGO (OMG)</a></h5><small class='hex hidden-xs'><font color='gray'>OmiseGO (OMG) is a public Ethereum-based financial technology for use in mainstream digital wallets</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/omise.png'> <a style='position:relative; top:8px' href='/token/0xd26114cd6EE289AccF82350c8d8487fedB8A0C07'>OmiseGO (OMG)</a></td><td>&nbsp;<span style='margin-left:-4px'>$1.6085</span><br><font size=1>0.00039374&nbsp;Btc<br>0.014670&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 12.68%</font></td><td>$51,364,702</td><td>$225,587,834&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;6</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x8dd5fbce2f6a956c3022ba3663759011dd51e73e'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/trueusd_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x8dd5fbce2f6a956c3022ba3663759011dd51e73e'>TrueUSD (TUSD)</a></h5><small class='hex hidden-xs'><font color='gray'>The TrustToken Platform aims to be the bridge between blockchains and real-world assets.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/trueusd_28.png'> <a style='position:relative; top:8px' href='/token/0x8dd5fbce2f6a956c3022ba3663759011dd51e73e'>TrueUSD (TUSD)</a></td><td>&nbsp;<span style='margin-left:-4px'>$1.0172</span><br><font size=1>0.00024899&nbsp;Btc<br>0.009277&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 0.40%</font></td><td>$79,991,133</td><td>$213,444,911&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;7</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xe41d2489571d322189246dafa5ebde1f4699f498'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/0xtoken_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xe41d2489571d322189246dafa5ebde1f4699f498'>ZRX (ZRX)</a></h5><small class='hex hidden-xs'><font color='gray'>The Protocol for Trading Tokens</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/0xtoken_28.png'> <a style='position:relative; top:8px' href='/token/0xe41d2489571d322189246dafa5ebde1f4699f498'>ZRX (ZRX)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.3457</span><br><font size=1>0.00008462&nbsp;Btc<br>0.003153&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 4.61%</font></td><td>$15,301,812</td><td>$190,899,439&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;8</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x0d8775f648430679a709e98d2b0cb6250d2887ef'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/bat.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x0d8775f648430679a709e98d2b0cb6250d2887ef'>BAT (BAT)</a></h5><small class='hex hidden-xs'><font color='gray'>The Basic Attention Token is the new token for the digital advertising industry.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/bat.png'> <a style='position:relative; top:8px' href='/token/0x0d8775f648430679a709e98d2b0cb6250d2887ef'>BAT (BAT)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.1440</span><br><font size=1>0.00003524&nbsp;Btc<br>0.001313&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -1.17%</font></td><td>$6,188,557</td><td>$175,340,376&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;9</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x8e870d67f660d95d5be530380d0ec0bd388289e1'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/paxos_28_2.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x8e870d67f660d95d5be530380d0ec0bd388289e1'>Paxos Standard (PAX)</a></h5><small class='hex hidden-xs'><font color='gray'>Paxos Standard is regulated crypto asset. It is fully collateralized 1:1 by the U.S. dollar, approved and regulated by the NYDFS, and enables instantaneous transactions.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/paxos_28_2.png'> <a style='position:relative; top:8px' href='/token/0x8e870d67f660d95d5be530380d0ec0bd388289e1'>Paxos Standard (PAX)</a></td><td>&nbsp;<span style='margin-left:-4px'>$1.0169</span><br><font size=1>0.00024893&nbsp;Btc<br>0.009274&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 0.55%</font></td><td>$86,727,815</td><td>$152,488,814&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;10</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/zilliqa_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27'>Zilliqa (ZIL)</a></h5><small class='hex hidden-xs'><font color='gray'>Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands ​of transactions per second.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/zilliqa_28.png'> <a style='position:relative; top:8px' href='/token/0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27'>Zilliqa (ZIL)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0170</span><br><font size=1>0.00000415&nbsp;Btc<br>0.000155&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 1.59%</font></td><td>$11,235,748</td><td>$136,788,589&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;11</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x514910771af9ca656af840dff83e8264ecf986ca'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/chainlink_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x514910771af9ca656af840dff83e8264ecf986ca'>ChainLink Token (LINK)</a></h5><small class='hex hidden-xs'><font color='gray'>The LINK Network provides smart contracts with data, bank payments and access to APIs.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/chainlink_28.png'> <a style='position:relative; top:8px' href='/token/0x514910771af9ca656af840dff83e8264ecf986ca'>ChainLink Token (LINK)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.3310</span><br><font size=1>0.00008103&nbsp;Btc<br>0.003019&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 18.11%</font></td><td>$9,434,003</td><td>$115,857,967&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;12</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xb5a5f22694352c15b00323844ad545abb2b11028'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/icon_icx.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xb5a5f22694352c15b00323844ad545abb2b11028'>ICON (ICX)</a></h5><small class='hex hidden-xs'><font color='gray'>The ICON Network is comprised of various institutions ranging from:
+financial institutions, insurance companies, hospitals, universities and more.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/icon_icx.png'> <a style='position:relative; top:8px' href='/token/0xb5a5f22694352c15b00323844ad545abb2b11028'>ICON (ICX)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.2406</span><br><font size=1>0.00005889&nbsp;Btc<br>0.002194&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 0.38%</font></td><td>$12,653,631</td><td>$113,895,481&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;13</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x056fd409e1d7a124bd7017459dfea2f387b6d5cd'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/gemini_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x056fd409e1d7a124bd7017459dfea2f387b6d5cd'>Gemini dollar (GUSD)</a></h5><small class='hex hidden-xs'><font color='gray'>Gemini dollar combines the creditworthiness and price stability of the U.S. dollar with blockchain technology and the oversight of U.S. regulators.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/gemini_28.png'> <a style='position:relative; top:8px' href='/token/0x056fd409e1d7a124bd7017459dfea2f387b6d5cd'>Gemini dollar (GUSD)</a></td><td>&nbsp;<span style='margin-left:-4px'>$1.0937</span><br><font size=1>0.00026772&nbsp;Btc<br>0.009975&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 3.89%</font></td><td>$38,208,272</td><td>$103,275,826&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;14</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x48f775efbe4f5ece6e0df2f7b5932df56823b990'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/revaintoken_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x48f775efbe4f5ece6e0df2f7b5932df56823b990'>Revain (R)</a></h5><small class='hex hidden-xs'><font color='gray'>Revain is a new-generation feedback platform, based on the blockchain technology that does not allow to change or delete reviews and its authors get rewards for creating them!</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/revaintoken_28.png'> <a style='position:relative; top:8px' href='/token/0x48f775efbe4f5ece6e0df2f7b5932df56823b990'>Revain (R)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.2100</span><br><font size=1>0.00005140&nbsp;Btc<br>0.001915&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 7.59%</font></td><td>$3,820,567</td><td>$101,718,023&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;15</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/aeternity_28.jpg'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d'>Aeternity (AE)</a></h5><small class='hex hidden-xs'><font color='gray'>Scalable smart contracts interfacing with real world data.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/aeternity_28.jpg'> <a style='position:relative; top:8px' href='/token/0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d'>Aeternity (AE)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.4123</span><br><font size=1>0.00010092&nbsp;Btc<br>0.003760&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -3.03%</font></td><td>$6,572,714</td><td>$96,070,197&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;16</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x9ab165d795019b6d8b3e971dda91071421305e5a'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/aurora_AOA_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x9ab165d795019b6d8b3e971dda91071421305e5a'>Aurora (AOA)</a></h5><small class='hex hidden-xs'><font color='gray'>Aurora Chain offers intelligent application isolation and enables multi-chain parallel expansion to create an extremely high TPS with security maintain.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/aurora_AOA_28.png'> <a style='position:relative; top:8px' href='/token/0x9ab165d795019b6d8b3e971dda91071421305e5a'>Aurora (AOA)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0136</span><br><font size=1>0.00000333&nbsp;Btc<br>0.000124&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -0.25%</font></td><td>$520,226</td><td>$88,954,911&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;17</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/pundix-28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3'>Pundi X Token (NPXS)</a></h5></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/pundix-28.png'> <a style='position:relative; top:8px' href='/token/0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3'>Pundi X Token (NPXS)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0006</span><br><font size=1>0.00000014&nbsp;Btc<br>0.000005&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 1.46%</font></td><td>$2,744,801</td><td>$88,462,623&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;18</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/populous_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a'>Populous (PPT)</a></h5><small class='hex hidden-xs'><font color='gray'>Aims to rebuild invoice financing block by block, for invoice buyers and sellers.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/populous_28.png'> <a style='position:relative; top:8px' href='/token/0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a'>Populous (PPT)</a></td><td>&nbsp;<span style='margin-left:-4px'>$1.5759</span><br><font size=1>0.00038577&nbsp;Btc<br>0.014373&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 2.47%</font></td><td>$2,467,016</td><td>$83,922,668&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;19</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/bytom_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750'>Bytom (BTM)</a></h5><small class='hex hidden-xs'><font color='gray'>Transfer assets from atomic world to byteworld</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/bytom_28.png'> <a style='position:relative; top:8px' href='/token/0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750'>Bytom (BTM)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0835</span><br><font size=1>0.00002043&nbsp;Btc<br>0.000761&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 0.64%</font></td><td>$4,440,955</td><td>$83,665,744&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;20</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x1985365e9f78359a9B6AD760e32412f4a445E862'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/augur.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x1985365e9f78359a9B6AD760e32412f4a445E862'>Reputation (REP)</a></h5><small class='hex hidden-xs'><font color='gray'>Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/augur.png'> <a style='position:relative; top:8px' href='/token/0x1985365e9f78359a9B6AD760e32412f4a445E862'>Reputation (REP)</a></td><td>&nbsp;<span style='margin-left:-4px'>$7.3498</span><br><font size=1>0.00179912&nbsp;Btc<br>0.067030&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -0.49%</font></td><td>$1,986,024</td><td>$80,847,938&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;21</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xb63b606ac810a52cca15e44bb630fd42d8d1d83d'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/cryptocom_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xb63b606ac810a52cca15e44bb630fd42d8d1d83d'>Crypto.com (MCO)</a></h5><small class='hex hidden-xs'><font color='gray'>Crypto.com, the pioneering payments and cryptocurrency platform, seeks to accelerate the world’s transition to cryptocurrency.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/cryptocom_28.png'> <a style='position:relative; top:8px' href='/token/0xb63b606ac810a52cca15e44bb630fd42d8d1d83d'>Crypto.com (MCO)</a></td><td>&nbsp;<span style='margin-left:-4px'>$4.3854</span><br><font size=1>0.00068501&nbsp;Btc<br>0.039995&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 2.73%</font></td><td>$6,222,977</td><td>$69,262,927&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;22</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xa74476443119A942dE498590Fe1f2454d7D4aC0d'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/golem.PNG'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xa74476443119A942dE498590Fe1f2454d7D4aC0d'>Golem (GNT)</a></h5><small class='hex hidden-xs'><font color='gray'>Golem is going to create the first decentralized global market for computing power</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/golem.PNG'> <a style='position:relative; top:8px' href='/token/0xa74476443119A942dE498590Fe1f2454d7D4aC0d'>Golem (GNT)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0709</span><br><font size=1>0.00001735&nbsp;Btc<br>0.000646&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -0.69%</font></td><td>$2,518,968</td><td>$68,033,483&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;23</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x6c6ee5e31d828de241282b9606c8e98ea48526e2'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/holo_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x6c6ee5e31d828de241282b9606c8e98ea48526e2'>HoloToken (HOT)</a></h5><small class='hex hidden-xs'><font color='gray'>Holo is a decentralized hosting platform and a new breed of asset-backed, mutual-credit cryptocurrency based on Holochain. Holochain is a massively scalable, agent-centric post-blockchain development framework for distributed applications.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/holo_28.png'> <a style='position:relative; top:8px' href='/token/0x6c6ee5e31d828de241282b9606c8e98ea48526e2'>HoloToken (HOT)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0005</span><br><font size=1>0.00000012&nbsp;Btc<br>0.000005&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -0.56%</font></td><td>$1,486,915</td><td>$67,377,144&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;24</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/qash_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6'>QASH (QASH)</a></h5><small class='hex hidden-xs'><font color='gray'>We envision QASH to be the preferred payment token for financial services,
+like the Bitcoin for financial services.
+As more financial institutions, fintech startups and partners adopt QASH
+as a method of payment, the utility of QASH will scale, fueling
+the Fintech revolution.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/qash_28.png'> <a style='position:relative; top:8px' href='/token/0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6'>QASH (QASH)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.1752</span><br><font size=1>0.00004288&nbsp;Btc<br>0.001598&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -6.18%</font></td><td>$683,512</td><td>$61,314,859&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;25</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x744d70fdbe2ba4cf95131626614a1763df805b9e'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/status.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x744d70fdbe2ba4cf95131626614a1763df805b9e'>StatusNetwork (SNT)</a></h5><small class='hex hidden-xs'><font color='gray'>Status is an open source messaging platform and mobile browser to interact with decentralized applications that run on the Ethereum Network.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/status.png'> <a style='position:relative; top:8px' href='/token/0x744d70fdbe2ba4cf95131626614a1763df805b9e'>StatusNetwork (SNT)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0171</span><br><font size=1>0.00000419&nbsp;Btc<br>0.000156&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 1.30%</font></td><td>$3,549,538</td><td>$59,408,720&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;26</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x6f259637dcd74c767781e37bc6133cd6a68aa161'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/huobi_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x6f259637dcd74c767781e37bc6133cd6a68aa161'>HuobiToken (HT)</a></h5><small class='hex hidden-xs'><font color='gray'>Huobi Global is a world-leading cryptocurrency financial services group.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/huobi_28.png'> <a style='position:relative; top:8px' href='/token/0x6f259637dcd74c767781e37bc6133cd6a68aa161'>HuobiToken (HT)</a></td><td>&nbsp;<span style='margin-left:-4px'>$1.1742</span><br><font size=1>0.00028742&nbsp;Btc<br>0.010708&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -1.32%</font></td><td>$15,962,764</td><td>$58,708,716&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;27</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/dai_stablecoin.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359'>Dai Stablecoin v1.0 (DAI)</a></h5></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/dai_stablecoin.png'> <a style='position:relative; top:8px' href='/token/0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359'>Dai Stablecoin v1.0 (DAI)</a></td><td>&nbsp;<span style='margin-left:-4px'>$1.0244</span><br><font size=1>0.00025076&nbsp;Btc<br>0.009343&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 1.25%</font></td><td>$5,126,472</td><td>$58,026,964&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;28</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/iost_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab'>IOSToken (IOST)</a></h5><small class='hex hidden-xs'><font color='gray'>A Secure & Scalable Blockchain for Smart Services</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/iost_28.png'> <a style='position:relative; top:8px' href='/token/0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab'>IOSToken (IOST)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0048</span><br><font size=1>0.00000117&nbsp;Btc<br>0.000044&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 1.50%</font></td><td>$8,949,738</td><td>$57,610,385&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;29</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xB97048628DB6B661D4C2aA833e95Dbe1A905B280'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/tenx_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xB97048628DB6B661D4C2aA833e95Dbe1A905B280'>TenXPay (PAY)</a></h5><small class='hex hidden-xs'><font color='gray'>TenX connects your blockchain assets for everyday use. TenX’s debit card and banking licence will allow us to be a hub for the blockchain ecosystem to connect for real-world use cases.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/tenx_28.png'> <a style='position:relative; top:8px' href='/token/0xB97048628DB6B661D4C2aA833e95Dbe1A905B280'>TenXPay (PAY)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.4782</span><br><font size=1>0.00011707&nbsp;Btc<br>0.004362&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 4.11%</font></td><td>$996,295</td><td>$54,686,000&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;30</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x0f5d2fb29fb7d3cfee444a200298f468908cc942'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/decentraland3_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x0f5d2fb29fb7d3cfee444a200298f468908cc942'>Decentraland (MANA)</a></h5><small class='hex hidden-xs'><font color='gray'>Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/decentraland3_28.png'> <a style='position:relative; top:8px' href='/token/0x0f5d2fb29fb7d3cfee444a200298f468908cc942'>Decentraland (MANA)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0519</span><br><font size=1>0.00001271&nbsp;Btc<br>0.000473&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -1.11%</font></td><td>$4,585,850</td><td>$54,511,109&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;31</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x17aa18a4b64a55abed7fa543f2ba4e91f2dce482'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/insightchain28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x17aa18a4b64a55abed7fa543f2ba4e91f2dce482'>Insight Chain (INB)</a></h5><small class='hex hidden-xs'><font color='gray'>Insight Chain is an EOS-based data ecosystem on the blockchain, works on building Wall Street-like financial order in the blockchain domain.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/insightchain28.png'> <a style='position:relative; top:8px' href='/token/0x17aa18a4b64a55abed7fa543f2ba4e91f2dce482'>Insight Chain (INB)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.2982</span><br><font size=1>0.00007300&nbsp;Btc<br>0.002720&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 3.60%</font></td><td>$4,355,092</td><td>$49,661,113&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;32</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x49bd2da75b1f7af1e4dfd6b1125fecde59dbec58'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/linkey_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x49bd2da75b1f7af1e4dfd6b1125fecde59dbec58'>Linkey Token (LKY)</a></h5><small class='hex hidden-xs'><font color='gray'>A platform to connect digital assets to real community.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/linkey_28.png'> <a style='position:relative; top:8px' href='/token/0x49bd2da75b1f7af1e4dfd6b1125fecde59dbec58'>Linkey Token (LKY)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.9645</span><br><font size=1>0.0002361&nbsp;Btc<br>0.008796&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 18.15%</font></td><td>$38,836</td><td>$48,225,861&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;33</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/walton2_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74'>Walton (WTC)</a></h5><small class='hex hidden-xs'><font color='gray'>Value Internet of Things (VIoT) constructs a perfect commercial ecosystem via the integration of the real world and the blockchain.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/walton2_28.png'> <a style='position:relative; top:8px' href='/token/0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74'>Walton (WTC)</a></td><td>&nbsp;<span style='margin-left:-4px'>$1.1902</span><br><font size=1>0.00029133&nbsp;Btc<br>0.010854&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 3.00%</font></td><td>$5,501,160</td><td>$48,046,819&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;34</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/nexo_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206'>Nexo (NEXO)</a></h5><small class='hex hidden-xs'><font color='gray'>Instant Crypto-backed Loans</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/nexo_28.png'> <a style='position:relative; top:8px' href='/token/0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206'>Nexo (NEXO)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0828</span><br><font size=1>0.00002026&nbsp;Btc<br>0.000755&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 3.02%</font></td><td>$1,956,116</td><td>$46,355,868&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;35</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x08d32b0da63e2C3bcF8019c9c5d849d7a9d791e6'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/Dentacoin.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x08d32b0da63e2C3bcF8019c9c5d849d7a9d791e6'>Dentacoin (Dentacoin)</a></h5><small class='hex hidden-xs'><font color='gray'>Aims to be the blockchain solution for the global dental industry.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/Dentacoin.png'> <a style='position:relative; top:8px' href='/token/0x08d32b0da63e2C3bcF8019c9c5d849d7a9d791e6'>Dentacoin (Dentacoin)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0001</span><br><font size=1>0.00000003&nbsp;Btc<br>0.000001&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 11.10%</font></td><td>$41,477</td><td>$45,013,004&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;36</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x1c83501478f1320977047008496dacbd60bb15ef'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/digitextoken_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x1c83501478f1320977047008496dacbd60bb15ef'>DigitexFutures (DGTX)</a></h5><small class='hex hidden-xs'><font color='gray'>The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/digitextoken_28.png'> <a style='position:relative; top:8px' href='/token/0x1c83501478f1320977047008496dacbd60bb15ef'>DigitexFutures (DGTX)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0609</span><br><font size=1>0.00001490&nbsp;Btc<br>0.000555&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 3.78%</font></td><td>$549,285</td><td>$44,518,097&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;37</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/polymath_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec'>Polymath (POLY)</a></h5><small class='hex hidden-xs'><font color='gray'>Polymath aims to enable securities to migrate to the blockchain.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/polymath_28.png'> <a style='position:relative; top:8px' href='/token/0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec'>Polymath (POLY)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.1538</span><br><font size=1>0.00003766&nbsp;Btc<br>0.001403&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 0.75%</font></td><td>$3,791,972</td><td>$44,352,263&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;38</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x1844b21593262668b7248d0f57a220caaba46ab9'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/oyster28_2.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x1844b21593262668b7248d0f57a220caaba46ab9'>Oyster Pearl (PRL)</a></h5><small class='hex hidden-xs'><font color='gray'>Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/oyster28_2.png'> <a style='position:relative; top:8px' href='/token/0x1844b21593262668b7248d0f57a220caaba46ab9'>Oyster Pearl (PRL)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.5102</span><br><font size=1>0.00008001&nbsp;Btc<br>0.004653&nbsp;Eth</font><br><br></td><td>--</td><td>$0</td><td>$43,346,571&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;39</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x4CEdA7906a5Ed2179785Cd3A40A69ee8bc99C466'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/aion-network_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x4CEdA7906a5Ed2179785Cd3A40A69ee8bc99C466'>AION (AION)</a></h5><small class='hex hidden-xs'><font color='gray'>A multi-tier blockchain system designed to address unsolved questions of scalability, privacy, and interoperability in blockchain networks</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/aion-network_28.png'> <a style='position:relative; top:8px' href='/token/0x4CEdA7906a5Ed2179785Cd3A40A69ee8bc99C466'>AION (AION)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.1556</span><br><font size=1>0.00003808&nbsp;Btc<br>0.001419&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 12.96%</font></td><td>$3,642,715</td><td>$41,270,446&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;40</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x40395044Ac3c0C57051906dA938B54BD6557F212'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/mobilego_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x40395044Ac3c0C57051906dA938B54BD6557F212'>MobileGo (MGO)</a></h5><small class='hex hidden-xs'><font color='gray'>A dedicated token to bring eSports to everyone.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/mobilego_28.png'> <a style='position:relative; top:8px' href='/token/0x40395044Ac3c0C57051906dA938B54BD6557F212'>MobileGo (MGO)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.4007</span><br><font size=1>0.00009808&nbsp;Btc<br>0.003654&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -15.64%</font></td><td>$8,406,900</td><td>$40,066,087&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;41</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/quarkchain_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664'>QuarkChain Token (QKC)</a></h5><small class='hex hidden-xs'><font color='gray'>A High-Capacity Peer-to-Peer Transactional System</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/quarkchain_28.png'> <a style='position:relative; top:8px' href='/token/0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664'>QuarkChain Token (QKC)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0486</span><br><font size=1>0.00001190&nbsp;Btc<br>0.000443&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 3.90%</font></td><td>$3,775,243</td><td>$38,971,306&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;42</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x39bb259f66e1c59d5abef88375979b4d20d98022'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/wax.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x39bb259f66e1c59d5abef88375979b4d20d98022'>WAX Token (WAX)</a></h5><small class='hex hidden-xs'><font color='gray'>Global Decentralized Marketplace for Virtual Assets.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/wax.png'> <a style='position:relative; top:8px' href='/token/0x39bb259f66e1c59d5abef88375979b4d20d98022'>WAX Token (WAX)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0413</span><br><font size=1>0.00001012&nbsp;Btc<br>0.000377&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 0.03%</font></td><td>$1,035,031</td><td>$38,694,363&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;43</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/cryptocom_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b'>Crypto.com Chain (CRO)</a></h5><small class='hex hidden-xs'><font color='gray'>Pay and be paid in crypto anywhere, with any crypto, for free.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/cryptocom_28.png'> <a style='position:relative; top:8px' href='/token/0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b'>Crypto.com Chain (CRO)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0324</span><br><font size=1>0.00000793&nbsp;Btc<br>0.000296&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 47.93%</font></td><td>$1,671,586</td><td>$37,358,937&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;44</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/bancor.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c'>Bancor (BNT)</a></h5><small class='hex hidden-xs'><font color='gray'>Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/bancor.png'> <a style='position:relative; top:8px' href='/token/0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c'>Bancor (BNT)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.5755</span><br><font size=1>0.00014088&nbsp;Btc<br>0.005249&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 1.69%</font></td><td>$1,358,818</td><td>$36,199,404&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;45</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xdb25f211ab05b1c97d595516f45794528a807ad8'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/statiseuro_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xdb25f211ab05b1c97d595516f45794528a807ad8'>STASIS EURS Token (EURS)</a></h5><small class='hex hidden-xs'><font color='gray'>EURS token is a virtual financial asset that is designed to digitally mirror the EURO on the condition that its value is tied to the value of its collateral.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/statiseuro_28.png'> <a style='position:relative; top:8px' href='/token/0xdb25f211ab05b1c97d595516f45794528a807ad8'>STASIS EURS Token (EURS)</a></td><td>&nbsp;<span style='margin-left:-4px'>$1.1414</span><br><font size=1>0.0002794&nbsp;Btc<br>0.010410&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 1.13%</font></td><td>$520,747</td><td>$35,359,931&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;46</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xbf2179859fc6d5bee9bf9158632dc51678a4100e'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/aelf_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xbf2179859fc6d5bee9bf9158632dc51678a4100e'>ELF (ELF)</a></h5><small class='hex hidden-xs'><font color='gray'>elf is a decentralized self-evolving cloud computing blockchain
+network that aims to provide a high performance platform for commercial adoption of blockchain.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/aelf_28.png'> <a style='position:relative; top:8px' href='/token/0xbf2179859fc6d5bee9bf9158632dc51678a4100e'>ELF (ELF)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.1233</span><br><font size=1>0.00003019&nbsp;Btc<br>0.001125&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 3.26%</font></td><td>$4,516,446</td><td>$34,532,153&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;47</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xbf52f2ab39e26e0951d2a02b49b7702abe30406a'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/odem_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xbf52f2ab39e26e0951d2a02b49b7702abe30406a'>ODEM Token (ODEM)</a></h5><small class='hex hidden-xs'><font color='gray'>Unlocking human potential. Powering your education and certifications on the blockchain</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/odem_28.png'> <a style='position:relative; top:8px' href='/token/0xbf52f2ab39e26e0951d2a02b49b7702abe30406a'>ODEM Token (ODEM)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.1557</span><br><font size=1>0.00003812&nbsp;Btc<br>0.001420&nbsp;Eth</font><br><br></td><td><font color='red' class='text-nowrap'><i class='fa fa-caret-down'></i> -4.42%</font></td><td>$1,197,115</td><td>$33,953,561&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;48</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xef68e7c694f40c8202821edf525de3782458639f'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/loopring2_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xef68e7c694f40c8202821edf525de3782458639f'>Loopring (LRC)</a></h5><small class='hex hidden-xs'><font color='gray'>Loopring is not only a protocol but also a decentralized automated execution system that trades across the crypto-token exchanges.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/loopring2_28.png'> <a style='position:relative; top:8px' href='/token/0xef68e7c694f40c8202821edf525de3782458639f'>Loopring (LRC)</a></td><td>&nbsp;<span style='margin-left:-4px'>$0.0427</span><br><font size=1>0.00001046&nbsp;Btc<br>0.000390&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 1.13%</font></td><td>$417,529</td><td>$33,705,458&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;49</span></b></td><td align='center' class='hidden-xs'><a href='/token/0x8f3470A7388c05eE4e7AF3d01D8C722b0FF52374'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/veritaseum.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0x8f3470A7388c05eE4e7AF3d01D8C722b0FF52374'>Veritaseum (VERI)</a></h5><small class='hex hidden-xs'><font color='gray'>Veritaseum builds blockchain-based, peer-to-peer capital markets as software on a global scale.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/veritaseum.png'> <a style='position:relative; top:8px' href='/token/0x8f3470A7388c05eE4e7AF3d01D8C722b0FF52374'>Veritaseum (VERI)</a></td><td>&nbsp;<span style='margin-left:-4px'>$16.1088</span><br><font size=1>0.00394317&nbsp;Btc<br>0.146911&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 17.66%</font></td><td>$1,673,578</td><td>$32,807,859&nbsp;&nbsp;&nbsp;</td></tr><tr><td><b><span style='position:relative; top:8px'>&nbsp;50</span></b></td><td align='center' class='hidden-xs'><a href='/token/0xe0b7927c4af23765cb51314a0e0521a9645f0e2a'><img style='position:relative; top:6px' width='20px' class='rounded-x' src='/token/images/digix_dgd_28.png'></a></td><td class='hidden-xs'><h5 style='margin-bottom:4px'><a href='/token/0xe0b7927c4af23765cb51314a0e0521a9645f0e2a'>DGD (DGD)</a></h5><small class='hex hidden-xs'><font color='gray'>DigixDAO is a decentralized voting / utility token that allows users to submit and manage proposals that relate to the growth of the Digix ecosystem and platform.</font></small></td><td class='visible-xs'><img style='position:relative; top:6px' width='15px' class='rounded-x' src='/token/images/digix_dgd_28.png'> <a style='position:relative; top:8px' href='/token/0xe0b7927c4af23765cb51314a0e0521a9645f0e2a'>DGD (DGD)</a></td><td>&nbsp;<span style='margin-left:-4px'>$16.3900</span><br><font size=1>0.00401201&nbsp;Btc<br>0.149475&nbsp;Eth</font><br><br></td><td><font color='green' class='text-nowrap'><i class='fa  fa-caret-up'></i> 3.33%</font></td><td>$361,892</td><td>$32,779,963&nbsp;&nbsp;&nbsp;</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="row">
+<div class="col-md-12">
+<p align="right">
+<span style="white-space: nowrap; display: inline-block"><a Class="btn btn-primary btn-xs " disabled="disabled " href="#">First</a> <a Class="btn btn-primary btn-xs" disabled="disabled " href="#">Prev</a> <span style="padding: 2px 4px 4px 3px; border: 1px solid #D4D4D4; line-height: 30px; background-color: #EAEAEA; margin-top: 2px; height: 2px;">Page <b>1</b> of <b>17</b></span> <a Class="btn btn-default btn-xs logout" href="tokens?p=2">Next</a> <a Class="btn btn-default btn-xs logout" href="tokens?p=17">Last</a> </span>
+</p>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12" style="padding-top: 15px">
+</div>
+</div>
+<br />
+</div>
+<br /><br />
+<script type="text/javascript">
+        $(document).ready(function () {
+            (function ($) {
+                $.fn.customAutocomplete = function () {
+                    this.autocomplete({
+                        source: function (request, response) {
+                            var searchTerm = request.term;
+                            $.ajax({
+                                dataType: "json",
+                                type: 'Get',
+                                url: '/searchHandler?t=t',
+                                data: { term: searchTerm },
+                                success: function (data) {
+                                    response($.map(data, function (item) {
+                                        return {
+                                            label: item.split('\t')[0],
+                                            value: item.split('\t')[1],
+                                            desc: item.split('\t')[2],
+                                            typeval: item.split('\t')[3],
+                                            checkMark: item.split('\t')[4],
+                                            logo: item.split('\t')[5]
+                                        }
+                                    }));
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    console.log(textStatus);
+                                }
+                            });
+                        },
+                        autoFocus: true,
+                        delay: 100,
+                        minLength: 1,
+                        select: function (event, ui) {
+                            event.preventDefault();
+                            var typeval = ui.item.typeval;
+                            $(this).val(ui.item.label);
+                            if (typeval == 1) {
+                                window.location.href = '/token/' + ui.item.label;
+                            } else if (typeval == 2) {
+                                window.location.href = '/token/' + ui.item.value;
+                            } else if (typeval == 4) {
+                                window.location.href = '/token/' + ui.item.label;
+                            }
+                        }
+                    }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                        var tickMark = '';
+                        var imglogo = '';
+                        if (item.checkMark == '1') {
+                            tickMark = "<i class='fa fa-check-square pull-right' title='Official' style='color:#33A5FF'></i>";
+                        }
+                        if (item.logo != '') {
+                            imglogo = "<img src='/token/images/" + item.logo + "' width='14' style='margin-top:-3px'> ";
+                        }
+                        return $("<li>")
+                            .append("<div>" + imglogo + item.label.substring(0, 28) + tickMark + "<br><font size='1'>" + item.desc + "</font></div>")
+                            .appendTo(ul);
+                    };;
+                    return this;
+                };
+            })(jQuery);
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('l') == false) {
+                $("#searchtoken").customAutocomplete();
+            }
+        });
+    </script>
+<script type="text/javascript">
+            $(function () {
+                $("[rel='tooltip']").tooltip({ html: true });
+            });
+    </script>
+<div id="push"></div>
+
+</div>
+<div class="footer-v1">
+<div class="footer">
+<div class="container">
+<div class="row">
+<div class="col-md-3 map-img md-margin-bottom-40">
+<a href="http://www.ethereum.org" target="_blank" rel="nofollow">
+<img id="logo-footer" class="footer-logo" src="/images/Powered-by-Ethereum-small.png" alt=""></a>
+<p style="font-family:'Open Sans',sans-serif; font-size: 12px; color: #C0C0C0;">Etherscan is a Block Explorer and Analytics Platform for Ethereum, a decentralized smart contracts platform.</p>
+</div>
+<div class="col-md-6 md-margin-bottom-40 hidden-xs">
+<div class="headline">
+<h2>Latest Discussions</h2>
+<a href='/comments'><span class="pull-right" style="color: #C0C0C0; margin-top: 8px; ">[View More]</span></a>
+</div>
+<ul class="list-unstyled link-list">
+<li><img src='/images/icons/comment-white.png'>&nbsp;&nbsp;<a href='https://etherscan.io/token/0xfc0555aca4a78be9668993b39739d1d2616c75b0#comments'>It is worthless because Snuggie says it is worthless! N...</a><i class="fa fa-angle-right"></i></li><li><img src='/images/icons/comment-white.png'>&nbsp;&nbsp;<a href='https://etherscan.io/token/0xfc0555aca4a78be9668993b39739d1d2616c75b0#comments'>How about that EOD paint job Snuggie?</a><i class="fa fa-angle-right"></i></li><li><img src='/images/icons/comment-white.png'>&nbsp;&nbsp;<a href='http://etherscan.io/token/0xc3761eb917cd790b30dad99f6cc5b4ff93c4f9ea#comments'>Potential project. I hope it will develop successfully.</a><i class="fa fa-angle-right"></i></li><li><img src='/images/icons/comment-white.png'>&nbsp;&nbsp;<a href='http://etherscan.io/token/0xc3761eb917cd790b30dad99f6cc5b4ff93c4f9ea#comments'>glad i joined the airdrop.. lol.. price already 300% gai...</a><i class="fa fa-angle-right"></i></li>
+</ul>
+</div>
+<div class="col-md-3 md-margin-bottom-40">
+<div class="headline">
+<h2>Links</h2>
+</div>
+<address class="md-margin-bottom-40">
+<table>
+<tr>
+<td><i class="fa fa-envelope"></i>&nbsp;</td><td>&nbsp;<a href="/contactus">Contact Us</a></td>
+</tr>
+<tr>
+<td><i class="fa fa-reddit-square"></i></td><td>&nbsp;<a href="https://www.reddit.com/r/etherscan/" target="_blank">Forum</a></td>
+</tr>
+<tr>
+<td><i class="fa fa-twitter"></i></td><td>&nbsp;<a href="https://twitter.com/etherscan" target="_blank">Twitter</a></td>
+</tr>
+<tr>
+<td><i class="fa fa-pencil-square-o"></i></td><td>&nbsp;<a href="https://etherscancom.freshdesk.com/support/solutions" target="_blank">Knowledge Base</a></td>
+</tr>
+<tr>
+<td><i class="fa  fa-users"></i></td><td>&nbsp;<a href="/aboutus">About Us</a></td>
+</tr>
+<tr>
+<td><i class="fa  fa-file-text-o"></i></td><td>&nbsp;<a href="/terms">Terms of Service</a></td>
+</tr>
+</table>
+</address>
+</div>
+</div>
+</div>
+</div>
+<div class="copyright">
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+<p style="font-family:'Open Sans',sans-serif; font-size: 11px; color: #C0C0C0;">Etherscan © 2018 (B)
+|<a href="https://etherscan.io/contactus?id=3">Advertising</a>
+| Donations <a href="https://etherscan.io/address/0x71c7656ec7ab88b098defb751b7401b5f6d8976f">0x71c7656ec7ab88b098defb751b7401b5f6d8976f</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="divcookie" class="navbar navbar-default navbar-fixed-bottom" style="display:none; background-color:#A6ACAF; opacity: 0.95; justify-content:space-between; align-items: center; flex-wrap:nowrap">
+<div class="container">
+<p class="navbar-text pull-left" style="color:white">This Website <a href="https://etherscan.io/terms#cookiestatement" target="_blank"><font color='#3392FF'><b>uses cookies to improve your experience</b></font></a> And has an updated
+<a href="/privacyPolicy"><font color='#3392FF'><b>Privacy Policy</b></font></a>.
+</p>
+</div>
+<div class="container"><button id='btnCookie' style="border-color: rgb(0, 0, 0); border-width:1px" class="pull-right">Got It</button></div>
+</div>
+<script type="text/javascript" src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/combine-js-bottom.js?v=1.11"></script>
+<script type="text/javascript">
+    var cookieconsent = getCookie("etherscan_cookieconsent");
+    if (cookieconsent != "True") {
+       document.getElementById("divcookie").style.display = "flex";
+    };
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    $("#btnCookie").click(function () {
+        $("#divcookie").fadeOut("slow", function () {
+            var d = new Date();
+            d.setTime(d.getTime() + (1095 * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = "etherscan_cookieconsent=True" + ";" + expires + ";path=/";;
+        });
+    });
+</script>
+<link rel="Stylesheet" href="/css/jquery-ui.min.css" type="text/css" />
+</body>
+</html>
