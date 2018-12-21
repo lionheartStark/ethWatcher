@@ -8,12 +8,13 @@ import urllib.request
 import urllib.parse
 import urllib.error
 import re
+import pymysql
 
 
 def know_page_num(url):
     respond_str = spider_one_page(url)
-    num = find_from_str(respond_str, "Page <b>1</b> of <b>([0-9]+)</b>")
-    return num
+    number = find_from_str(respond_str, "Page <b>1</b> of <b>([0-9]+)</b>")
+    return number
 
 
 def spider_one_page(url):
@@ -31,6 +32,24 @@ def find_from_str(html_str, find_key):
     return token_url_list
 
 
+def create_table(db_name):
+    db_conn = pymysql.connect("localhost", "root", "789826", db_name, charset='utf8')
+
+    c = db_conn.cursor()
+    c.execute('''
+    create table if not exists tokens (
+        name varchar(50) primary key not null,
+        total_supply varchar(200)  not null,
+        owner varchar(100) not null
+    );
+    ''')
+
+    print("Table created successfully")
+    db_conn.commit()
+    c.close()
+    db_conn.close()
+
+
 def find_token_detail(url_str, token_name):
     url = "https://etherscan.io/readContract?a={}&v={}".format(url_str, url_str)
     detail_str = spider_one_page(url)
@@ -40,24 +59,41 @@ def find_token_detail(url_str, token_name):
     # token_detail += find_from_str(detail_str, "href='/address/(0x[^']*)'")
     print(token_name, "\n", total_supply, "\n", owner, "\n========================================\n")
 
-    return
+    return total_supply+owner
+
+
+def save_details(db_name, token_name, total_supply, owner):
+    db_conn = pymysql.connect("localhost", "root", "789826", db_name, charset='utf8')
+    c = db_conn.cursor()
+    sql_str = "insert into tokens  values('{}','{}','{}')".format(token_name, total_supply, owner)
+    c.execute(sql_str)
+    c.close()
+    db_conn.commit()
+    db_conn.close()
 
 
 if __name__ == '__main__':
+
     print("start")
     my_url = "https://etherscan.io/tokens"
+    my_db = "eth_data"
 
     page_num = int(know_page_num(my_url)[0])
+
+    create_table(my_db)
+
     i = 1
-    for num in range(page_num):
+    for num in range(1):
         my_html_str = spider_one_page(my_url+"?p="+str(num+1))
         one_page_url_list = find_from_str(my_html_str, "href='/token/(0x[^']*)'>([^<]+)<")
         for item in one_page_url_list:
             print(i, "\n")
-            find_token_detail(item[0], item[1])
+            # item[0]是代币合约地址，[1]是代币名称
+            detail = find_token_detail(item[0], item[1])
+            name_and_detail = [item[1]] + detail
+            if len(name_and_detail) is 3:
+                save_details(my_db, name_and_detail[0], name_and_detail[1], name_and_detail[2])
             i += 1
-
-
 
 
 
