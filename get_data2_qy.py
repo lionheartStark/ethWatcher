@@ -17,8 +17,23 @@ def create_table(db_conn):
     c = db_conn.cursor()
     c.execute('''
     create table if not exists transactions (
-        hash varchar(100) primary key not null,
-        gasPrice bigint  not null,
+        hash varchar(66) primary key not null,
+        
+        blockHash varchar(66) not null,
+        blockNumber bigint not null,
+        
+        from_ varchar(66) not null,
+        to_ varchar(66) not null,
+
+        gas bigint  not null,
+        gasPrice bigint not null,
+        value varchar(66) not null,
+        
+        
+        nonce varchar(66) not null,
+        transactionIndex varchar(66) not null,
+        
+        
         tag int default 0 not null
     );
     ''')
@@ -37,21 +52,27 @@ def do_sql(db_conn, sql_str):
     return
 
 
-# 将块中全部交易提交
+# 将块中全部交易提交db
 def blk_trans_to_db(input_blk,db_conn):
     if input_blk['transactions'] is []:
         return
     for transaction in input_blk['transactions']:
-        sql_values=""
-        sql_items=""
+        sql_values = ""
+        sql_items = ""
         for item in transaction:
-            if item in ["gasPrice"]:
+            # 存为int型的属性
+            if item in ["gasPrice", "gas", "blockNumber"]:
                 # print("\'"+web3.toHex((transaction[item]))+"\'")
                 sql_items += item + ","
                 sql_values += str(int((transaction[item]), 16))+","
-            elif item in ["hash"]:
-                sql_items += item + ","
-                sql_values += "'"+transaction[item]+"',"
+            # 存为str型的属性
+            elif item in ["hash", "nonce", "blockHash", "transactionIndex", "value",
+                          "from", "to"]:
+                if item in ["from", "to"]:
+                    sql_items += item + "_,"
+                else:
+                    sql_items += item + ","
+                sql_values += "'"+str(transaction[item])+"',"
         # 因为末尾多了一个逗号，所以需要删除
         sql_items = sql_items[0:-1]
         sql_values = sql_values[0:-1]
@@ -166,10 +187,10 @@ def create_db(name):
     conn.close()
 
 
-def clean_table(db_conn):
+def drop_table(db_conn):
     c = db_conn.cursor()
     c.execute('''
-    delete from  transactions;
+    drop table  transactions;
     ''')
     print("Table clean successfully")
     db_conn.commit()
@@ -182,13 +203,13 @@ if __name__ == '__main__':
     print("create_db ok!")
     my_db_conn = pymysql.connect("localhost", "root", "789826", db_name, charset='utf8')
 
+    drop_table(my_db_conn)
     create_table(my_db_conn)
-    clean_table(my_db_conn)
 
     requestId = 1
     force_end_num1 = int((rpc_func('eth_blockNumber', [], requestId)), 16)
 
-    get_data_force_end(force_end_num1-10, 3, 3)
+    get_data_force_end(force_end_num1-10, 3, 1)
     my_db_conn.commit()
     my_db_conn.close()
 

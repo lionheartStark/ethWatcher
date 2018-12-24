@@ -11,6 +11,7 @@ import re
 import pymysql
 import threadpool
 
+
 def know_page_num(url):
     respond_str = spider_one_page(url)
     number = find_from_str(respond_str, "Page <b>1</b> of <b>([0-9]+)</b>")
@@ -115,7 +116,6 @@ def drop_table(table_name,db_name):
     c.close()
     db_conn.commit()
     db_conn.close()
-
 
 
 if __name__ == '__main__':
